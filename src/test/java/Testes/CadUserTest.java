@@ -2,13 +2,16 @@ package Testes;
 
 import Suporte.Generator;
 import Suporte.Screenshot;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TestName;
-import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.security.PublicKey;
+
+import static org.junit.Assert.assertEquals;
 
 public class CadUserTest {
     private WebDriver navegador;
@@ -39,6 +42,8 @@ public class CadUserTest {
             navegador.findElement(By.linkText("Criar conta")).click();
 
             //Preencher o formulario
+            WebElement radio1 = navegador.findElement(By.id("fisica"));
+            radio1.click();
             navegador.findElement(By.id("firstname")).click();
             Screenshot.tirar(navegador, "C:\\Users\\Fran\\Pictures\\Testes\\" + Generator.datahoraParaArquivo() + test.getMethodName() + ".png");
             navegador.findElement(By.id("firstname")).clear();
@@ -60,7 +65,7 @@ public class CadUserTest {
             navegador.findElement(By.id("year")).sendKeys("1985");
             navegador.findElement(By.id("taxvat")).click();
             navegador.findElement(By.id("taxvat")).clear();
-            navegador.findElement(By.id("taxvat")).sendKeys("188.457.990-69");
+            navegador.findElement(By.id("taxvat")).sendKeys("930.068.710-73");
             navegador.findElement(By.id("password")).click();
             navegador.findElement(By.id("password")).clear();
             navegador.findElement(By.id("password")).sendKeys("teste123");
@@ -69,6 +74,9 @@ public class CadUserTest {
             navegador.findElement(By.id("confirmation")).clear();
             navegador.findElement(By.id("confirmation")).sendKeys("teste123");
             navegador.findElement(By.xpath("//button[@type='submit']")).click();
+           WebElement mensagemPop = navegador.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div/div/div/ul[1]/li/ul/li/span"));
+           String mensagem = mensagemPop.getText();
+           assertEquals("Obrigado por se registrar na CatClub.", mensagem);
             Screenshot.tirar(navegador, "C:\\Users\\Fran\\Pictures\\Testes\\" + Generator.datahoraParaArquivo() + test.getMethodName() + ".png");
             navegador.findElement(By.id("dropdownMenuButton")).click();
             navegador.findElement(By.linkText("Sair")).click();
